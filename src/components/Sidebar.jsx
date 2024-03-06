@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import logo from "../assets/react.svg";
+import logo from "../assets/disagro-logo.ico";
 import { v } from "../styles/Variables";
 import {
   AiOutlineLeft,
@@ -29,7 +29,6 @@ export function Sidebar({ sidebarOpen, setSidebarOpen }) {
         <div className="imgcontent">
           <img src={logo} />
         </div>
-        <h2>codigo369</h2>
       </div>
       {linksArray.map(({ icon, label, to }) => (
         <div className="LinkContainer" key={label}>
@@ -42,19 +41,6 @@ export function Sidebar({ sidebarOpen, setSidebarOpen }) {
           </NavLink>
         </div>
       ))}
-      <Divider />
-      {secondarylinksArray.map(({ icon, label, to }) => (
-        <div className="LinkContainer" key={label}>
-          <NavLink
-            to={to}
-            className={({ isActive }) => `Links${isActive ? ` active` : ``}`}
-          >
-            <div className="Linkicon">{icon}</div>
-            {sidebarOpen && <span>{label}</span>}
-          </NavLink>
-        </div>
-      ))}
-      <Divider />
       <div className="Themecontent">
         {sidebarOpen && <span className="titletheme">Dark mode</span>}
         <div className="Togglecontent">
@@ -106,18 +92,7 @@ const linksArray = [
     to: "/reportes",
   },
 ];
-const secondarylinksArray = [
-  {
-    label: "Configuración",
-    icon: <AiOutlineSetting />,
-    to: "/null",
-  },
-  {
-    label: "Salir",
-    icon: <MdLogout />,
-    to: "/null",
-  },
-];
+
 //#endregion
 
 //#region STYLED COMPONENTS
@@ -165,7 +140,7 @@ const Container = styled.div`
       }
       cursor: pointer;
       transition: all 0.3s;
-      transform: ${({ isOpen }) => (isOpen ? `scale(0.7)` : `scale(1.5)`)};
+      transform: ${({ isOpen }) => (isOpen ? `scale(0.7)` : `scale(0.8)`)};
     }
     h2 {
       display: ${({ isOpen }) => (isOpen ? `block` : `none`)};
