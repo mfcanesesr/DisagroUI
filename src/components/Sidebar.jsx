@@ -179,7 +179,7 @@ const Container = styled.div`
   }
   .Themecontent {
     position: absolute;
-    bottom: 20px;
+    bottom:20px;
     left: 0;
     right: 0;
     margin: auto;

@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { TabsComponent } from "../pages/TabsComponent";
+import { TabsComponent } from "../pages/TabsComponent.jsx";
 import { ToggleComponent } from "../pages/ToggleComponent";
 import { RadioButtonComponent } from "../pages/RadioButtonComponent";
 import { CheckboxComponent } from "../pages/CheckboxComponent";
