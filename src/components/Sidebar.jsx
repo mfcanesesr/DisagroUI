@@ -1,16 +1,10 @@
 import styled from "styled-components";
 import logo from "../assets/disagro-logo.ico";
 import { v } from "../styles/Variables";
-import {
-  AiOutlineLeft,
-  AiOutlineHome,
-  AiOutlineApartment,
-  AiOutlineSetting,
-} from "react-icons/ai";
-import { MdOutlineAnalytics, MdLogout } from "react-icons/md";
 import { NavLink } from "react-router-dom";
 import { useContext } from "react";
 import { ThemeContext } from "../App";
+import { CheckBoxOutlineBlankOutlined, CheckBoxOutlined, KeyboardArrowLeft, PinOutlined, RadioButtonCheckedOutlined, TabOutlined, ToggleOffOutlined } from "@mui/icons-material";
 export function Sidebar({ sidebarOpen, setSidebarOpen }) {
   const ModSidebaropen = () => {
     setSidebarOpen(!sidebarOpen);
@@ -23,7 +17,7 @@ export function Sidebar({ sidebarOpen, setSidebarOpen }) {
   return (
     <Container isOpen={sidebarOpen} themeUse={theme}>
       <button className="Sidebarbutton" onClick={ModSidebaropen}>
-        <AiOutlineLeft />
+      <KeyboardArrowLeft />
       </button>
       <div className="Logocontent">
         <div className="imgcontent">
@@ -68,27 +62,27 @@ export function Sidebar({ sidebarOpen, setSidebarOpen }) {
 const linksArray = [
   {
     label: "Tabs",
-    icon: <AiOutlineHome />,
+    icon: <TabOutlined  />,
     to: "/",
   },
   {
     label: "Toggle",
-    icon: <MdOutlineAnalytics />,
+    icon: <ToggleOffOutlined   />,
     to: "/toggle",
   },
   {
     label: "Radio Button",
-    icon: <AiOutlineApartment />,
+    icon: <RadioButtonCheckedOutlined />,
     to: "/radioButton",
   },
   {
     label: "Checkbox",
-    icon: <MdOutlineAnalytics />,
+    icon: <CheckBoxOutlined  />,
     to: "/checkBox",
   },
   {
     label: "Number Input",
-    icon: <MdOutlineAnalytics />,
+    icon: <PinOutlined  />,
     to: "/numberInput",
   },
 ];

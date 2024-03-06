@@ -56,7 +56,7 @@ export function TabsComponent() {
           className={classes.code}
           multiline
           variant="outlined"
-          rows={10}
+          minRows={10}
           value={codeSnippet}
           InputProps={{ readOnly: true }}
         />
