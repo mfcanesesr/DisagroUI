@@ -1,21 +1,24 @@
 import React, { useState } from 'react';
 import styled from "styled-components";
-import { Paper, Typography, Divider, IconButton, MenuItem, Select, Tab, Tabs } from '@mui/material';
+import { Divider, Tab, Tabs } from '@mui/material';
+import { TabPanel } from '@mui/lab';
+import { TabContext } from '@mui/lab';
 import CodeViewer from '../components/CodeViewer';
-const TabPanel = ({ value, index, children }) => {
-  return (
-    <div role="tabpanel" hidden={value !== index}>
-      {value === index && (
-        <div>{children}</div>
-      )}
-    </div>
-  );
-};
+import RadioButton from "../components/reactcomponents/RadioButton";
+
 export function RadioButtonComponent() {
   const [tabValue, setTabValue] = useState(0);
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
   };
+  const options = [ 
+    { id: 'option1', value: 'Option 1', label: ' Opción 1', disabled: false },
+    { id: 'option2', value: 'Option 2', label: ' Opción 2', disabled: false },
+    { id: 'option3', value: 'Option 3', label: ' Opción 3', disabled: true },
+    
+    // Agrega más opciones según sea necesario
+  ];
+
   const vuecode = `
   <template>
   <div class="radio-options-container">
@@ -103,10 +106,7 @@ input[type="radio"]:disabled:checked{
   box-shadow: inset 0 0 0 2px #FFFFFF;
   border: 1px solid #E5E5E5; /* Color y grosor del borde */
 }
-
-
 </style>
-
   `;
 
   const nextcode = `
@@ -195,28 +195,121 @@ input[type="radio"]:disabled:checked{
   
   `;
 
-  const angularcode = `
-    /* CSS code here... */
-  `;
+  const angularCodes = [
+    {
+      language: 'typescript',
+      label: 'Angular TS',
+      code: `import { Component, Input } from '@angular/core';
+@Component({
+  selector: 'app-radio-button',
+  templateUrl: './radio-button.component.html',
+  styleUrls: ['./radio-button.component.css']
+})
+export class RadioButtonComponent {
+  @Input() options: { id: string, value: string, label: string, disabled: boolean, checked: boolean }[] = [];
+  selectedOption: string = '';
+}`
+    },
+    {
+      language: 'html',
+      label: 'Angular Html',
+      code: `<div class="radio-options-container">
+      <div class="radio-option" *ngFor="let option of options" [attr.key]="option.id">
+        <input type="radio"
+               [id]="option.id"
+               [value]="option.value"
+               [(ngModel)]="selectedOption"
+               [disabled]="option.disabled"
+               [checked]="option.checked">
+        <label [for]="option.id">{{ option.label }}</label>
+      </div>
+      <p>Opción seleccionada: {{ selectedOption }}</p>
+    </div>
+    `
+    },
+    {
+      language: 'css',
+      label: 'Angular CSS',
+      code: `.radio-options-container {
+        align-items: center;
+        display: inline-block;
+      }
+      
+      .radio-option {
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        top: -0.2em;
+      }
+      
+      input[type="radio"] {
+        appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        border: 1px solid #1CCC1D;
+        outline: none;
+        cursor: pointer;
+      }
+      
+      input[type="radio"]:hover {
+        border: 1px solid #0B520C;
+      }
+      
+      input[type="radio"]:checked:hover {
+        background-color: #0B520C;
+        border: 1px solid #0B520C;
+        box-shadow: inset 0 0 0 2px #FFFFFF;
+      }
+      
+      input[type="radio"]:checked {
+        background-color: #1CCC1D;
+        box-shadow: inset 0 0 0 2px #FFFFFF;
+        border: 1px solid #1CCC1D;
+      }
+      
+      input[type="radio"]:disabled{
+        border: 1px solid #E5E5E5;
+      }
+      
+      input[type="radio"]:disabled + label{
+        color: #E5E5E5;
+      }
+      
+      input[type="radio"]:disabled:checked{
+        background-color: #E5E5E5;
+        box-shadow: inset 0 0 0 2px #FFFFFF;
+        border: 1px solid #E5E5E5;
+      }
+      `
+    }
+  ];
 
   return (
     <Container>
       <h1>Radio Button</h1>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+        <RadioButton options={options} />
+      </div>
       <Tabs value={tabValue} onChange={handleTabChange}>
         <Tab label="Vue" />
         <Tab label="Angular" />
         <Tab label="Next" />
       </Tabs>
       <Divider sx={{ my: 2 }} />
-      <TabPanel value={tabValue} index={0}>
-        <CodeViewer javascriptCode={vuecode}/>
-      </TabPanel>
-      <TabPanel value={tabValue} index={1}>
-        <CodeViewer javascriptCode={nextcode}/>
-      </TabPanel>
-      <TabPanel value={tabValue} index={2}>
-        <CodeViewer javascriptCode={angularcode}/>
-      </TabPanel>
+      <TabContext value={tabValue}>
+        <TabPanel value={0}>
+          <CodeViewer files={[{ language: 'html', label: 'Vue HTML', code: vuecode }]} />
+        </TabPanel>
+        <TabPanel value={1}>
+          <CodeViewer files={angularCodes} />
+        </TabPanel>
+        <TabPanel value={2}>
+          <CodeViewer files={[{ language: 'javascript', label: 'Next JavaScript', code: nextcode }]} />
+        </TabPanel>
+      </TabContext>
     </Container>
   );
 }

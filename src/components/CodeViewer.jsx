@@ -3,8 +3,8 @@ import { Paper, Typography, Divider, IconButton, MenuItem, Select } from '@mui/m
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { ContentCopy } from '@mui/icons-material';
 
-const CodeViewer = ({ javascriptCode, htmlCode, cssCode }) => {
-  const [language, setLanguage] = useState('javascript');
+const CodeViewer = ({ files }) => {
+  const [language, setLanguage] = useState(files[0].language);
 
   const handleCopy = () => {
     // Lógica para copiar el código al portapapeles
@@ -14,26 +14,8 @@ const CodeViewer = ({ javascriptCode, htmlCode, cssCode }) => {
     setLanguage(event.target.value);
   };
 
-  let code = '';
-  switch (language) {
-    case 'javascript':
-      code = javascriptCode;
-      break;
-    case 'html':
-      code = htmlCode;
-      break;
-    case 'css':
-      code = cssCode;
-      break;
-    default:
-      code = '';
-  }
-
-  const languages = [
-    { value: 'javascript', label: 'JavaScript', code: javascriptCode },
-    { value: 'html', label: 'HTML', code: htmlCode },
-    { value: 'css', label: 'CSS', code: cssCode },
-  ];
+  const selectedFile = files.find(file => file.language === language);
+  const code = selectedFile ? selectedFile.code : '';
 
   return (
     <Paper elevation={3} sx={{ p: 2 }}>
@@ -42,8 +24,8 @@ const CodeViewer = ({ javascriptCode, htmlCode, cssCode }) => {
           Código
         </Typography>
         <Select value={language} onChange={handleChangeLanguage}>
-          {languages.map(lang => lang.code && (
-            <MenuItem key={lang.value} value={lang.value}>{lang.label}</MenuItem>
+          {files.map(file => (
+            <MenuItem key={file.language} value={file.language}>{file.label}</MenuItem>
           ))}
         </Select>
       </div>
