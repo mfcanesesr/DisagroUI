@@ -4,6 +4,7 @@ import { TabPanel } from '@mui/lab';
 import { TabContext } from '@mui/lab';
 import CodeViewer from '../components/CodeViewer';
 import { Divider, Tab, Tabs } from '@mui/material';
+import InputNumber from "../components/reactcomponents/InputNumber/inputnumber";
 
 export const NumberInputComponent = () => {
   const [tabValue, setTabValue] = useState(0);
@@ -605,6 +606,9 @@ label {
   return (
     <Container>
       <h1>Number Input</h1>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <InputNumber state="filled" ></InputNumber>
+      </div>
       <Tabs value={tabValue} onChange={handleTabChange}>
         <Tab label="Vue" />
         <Tab label="Angular" />

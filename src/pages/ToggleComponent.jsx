@@ -4,6 +4,8 @@ import React, { useState } from 'react';
  import { TabContext } from '@mui/lab';
  import CodeViewer from '../components/CodeViewer';
  import { Divider, Tab, Tabs } from '@mui/material';
+ import Toggle2 from '../components/reactcomponents/Toggle/Toggle2'; 
+
  
  
  export const ToggleComponent = () => {
@@ -672,6 +674,8 @@ import React, { useState } from 'react';
    return (
      <Container>
         <h1>Toggle</h1>
+        <Toggle2 label="Opción 1" disabled={false} />
+        <Toggle2 label="Opción 2" disabled={true} />
        <Tabs value={tabValue} onChange={handleTabChange}>
          <Tab label="Vue" />
          <Tab label="Angular" />

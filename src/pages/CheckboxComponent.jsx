@@ -4,6 +4,7 @@ import { TabPanel } from '@mui/lab';
 import { TabContext } from '@mui/lab';
 import CodeViewer from '../components/CodeViewer';
 import { Divider, Tab, Tabs } from '@mui/material';
+import Checkbox from '../components/reactcomponents/Checkbox/Checkbox';
 
 
 export const CheckboxComponent = () => {
@@ -459,6 +460,9 @@ export const CheckboxComponent = () => {
   return (
     <Container>
       <h1>Checkbox</h1>
+      <Checkbox label="Aceptar términos y condiciones" isDisabled={false} />
+      <br></br>
+      <Checkbox label="Esta opción está deshabilitada" isDisabled={true} />
       <Tabs value={tabValue} onChange={handleTabChange}>
         <Tab label="Vue" />
         <Tab label="Angular" />

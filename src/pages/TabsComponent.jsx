@@ -4,6 +4,7 @@ import { TabPanel } from '@mui/lab';
 import { TabContext } from '@mui/lab';
 import CodeViewer from '../components/CodeViewer';
 import { Divider, Tab, Tabs } from '@mui/material';
+import TabsProyect from '../components/reactcomponents/Tabs/tabhicon';
 
 
 export const TabsComponent = () => {
@@ -819,7 +820,10 @@ export const TabsComponent = () => {
   ];
   return (
     <Container>
-      <h1>Checkbox</h1>
+      <h1>Tabs</h1>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <TabsProyect />
+      </div>
       <Tabs value={tabValue} onChange={handleTabChange}>
         <Tab label="Vue" />
         <Tab label="Angular" />
