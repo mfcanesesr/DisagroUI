@@ -5,6 +5,7 @@ export const NumberInputComponent = () => {
   return (
     <Container>
       <h1>Number Input</h1>
+      <CodeViewer></CodeViewer>
     </Container>
   );
 }
