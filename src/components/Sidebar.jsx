@@ -67,29 +67,29 @@ export function Sidebar({ sidebarOpen, setSidebarOpen }) {
 //#region Data links
 const linksArray = [
   {
-    label: "Home",
+    label: "Tabs",
     icon: <AiOutlineHome />,
     to: "/",
   },
   {
-    label: "Estadisticas",
+    label: "Toggle",
     icon: <MdOutlineAnalytics />,
-    to: "/estadisticas",
+    to: "/toggle",
   },
   {
-    label: "Productos",
+    label: "Radio Button",
     icon: <AiOutlineApartment />,
-    to: "/productos",
+    to: "/radioButton",
   },
   {
-    label: "Diagramas",
+    label: "Checkbox",
     icon: <MdOutlineAnalytics />,
-    to: "/diagramas",
+    to: "/checkBox",
   },
   {
-    label: "Reportes",
+    label: "Number Input",
     icon: <MdOutlineAnalytics />,
-    to: "/reportes",
+    to: "/numberInput",
   },
 ];
 
@@ -178,18 +178,19 @@ const Container = styled.div`
     }
   }
   .Themecontent {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    right: 0;
+    margin: auto;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    .titletheme {
-      display: block;
-      padding: 10px;
-      font-weight: 700;
-      opacity: ${({ isOpen }) => (isOpen ? `1` : `0`)};
-      transition: all 0.3s;
-      white-space: nowrap;
-      overflow: hidden;
-    }
+    padding: 0 20px;
+    width: calc(100% - 40px);
+    transition: all 0.3s;
+  }
+  
     .Togglecontent {
       margin: ${({ isOpen }) => (isOpen ? `auto 40px` : `auto 15px`)};
       width: 36px;
