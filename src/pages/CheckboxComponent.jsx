@@ -13,7 +13,7 @@ export const CheckboxComponent = () => {
 
 
 const Container = styled.div`
-   height: 100vh;
+   height: auto;
    margin: 50px;
 `;
 

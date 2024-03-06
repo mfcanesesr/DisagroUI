@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from "styled-components";
+import CodeViewer from '../components/CodeViewer';
 
 export const NumberInputComponent = () => {
   return (
@@ -9,7 +10,6 @@ export const NumberInputComponent = () => {
     </Container>
   );
 }
-
 
 const Container = styled.div`
    height: 100vh;
