@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from "styled-components";
 import { TabPanel } from '@mui/lab';
 import { TabContext } from '@mui/lab';
-import CodeViewer from '../components/CodeViewer';
+import CodeViewer from '../../components/CodeViewer';
 import { Divider, Tab, Tabs } from '@mui/material';
-import InputNumber from "../components/reactcomponents/InputNumber/inputnumber";
+import InputNumber from "../../components/reactcomponents/InputNumber/inputnumber";
+import { ThemeContext } from '../../App'; 
 
 export const NumberInputComponent = () => {
+  const { setTheme, theme } = useContext(ThemeContext); 
   const [tabValue, setTabValue] = useState(0);
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
@@ -205,7 +207,7 @@ export const NumberInputComponent = () => {
     }
     `
     },
-  ];;
+  ];
 
   const nextcodes = [
     {
@@ -603,32 +605,45 @@ label {
       `
     }
   ];
-  return (
-    <Container>
-      <h1>Number Input</h1>
+
+const tabsTextColor = theme === "light" ? "#000000" : "#ffffff";
+const dividerColor = theme === "light" ? "#000000" : "#ffffff";
+
+return (
+  <Container>
+    <h1>Number Input</h1>
+      <PreviewBox>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
       <InputNumber state="filled" ></InputNumber>
       </div>
-      <Tabs value={tabValue} onChange={handleTabChange}>
-        <Tab label="Vue" />
-        <Tab label="Angular" />
-        <Tab label="Next" />
-      </Tabs>
-      <Divider sx={{ my: 2 }} />
-      <TabContext value={tabValue}>
-        <TabPanel value={0}>
-          <CodeViewer files={vuecodes} />
-        </TabPanel>
-        <TabPanel value={1}>
-          <CodeViewer files={angularCodes} />
-        </TabPanel>
-        <TabPanel value={2}>
-          <CodeViewer files={nextcodes} />
-        </TabPanel>
-      </TabContext>
-    </Container>
-  );
+    </PreviewBox>
+    <Tabs value={tabValue} onChange={handleTabChange}>
+      <Tab label="Vue" style={{ color: tabsTextColor }} />
+      <Tab label="Angular"  style={{ color: tabsTextColor }}/>
+      <Tab label="Next" style={{ color: tabsTextColor }} />
+    </Tabs>
+    <Divider style={{ backgroundColor: dividerColor }} sx={{ my: 2 }} />
+    <TabContext value={tabValue}>
+      <TabPanel value={0}>
+        <CodeViewer files={vuecodes} />
+      </TabPanel>
+      <TabPanel value={1}>
+        <CodeViewer files={angularCodes} />
+      </TabPanel>
+      <TabPanel value={2}>
+        <CodeViewer files={nextcodes} />
+      </TabPanel>
+    </TabContext>
+  </Container>
+);
 }
+
+const PreviewBox = styled.div`
+margin-bottom: 20px;
+padding: 20px;
+border-radius: 25px;
+background-color: #B2B1C3;
+`;
 
 const Container = styled.div`
    height: 100vh;

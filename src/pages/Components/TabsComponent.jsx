@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import { ThemeContext } from '../../App'; 
+import React, { useState, useContext } from 'react';
 import styled from "styled-components";
 import { TabPanel } from '@mui/lab';
 import { TabContext } from '@mui/lab';
-import CodeViewer from '../components/CodeViewer';
+import CodeViewer from '../../components/CodeViewer';
 import { Divider, Tab, Tabs } from '@mui/material';
-import TabsProyect from '../components/reactcomponents/Tabs/tabhicon';
+import TabsProyect from '../../components/reactcomponents/Tabs/tabhicon';
 
 
 export const TabsComponent = () => {
@@ -818,18 +819,23 @@ export const TabsComponent = () => {
       `
     }
   ];
+  const { setTheme, theme } = useContext(ThemeContext); 
+  const tabsTextColor = theme === "light" ? "#000000" : "#ffffff";
+  const dividerColor = theme === "light" ? "#000000" : "#ffffff";
   return (
     <Container>
       <h1>Tabs</h1>
+      <PreviewBox>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
       <TabsProyect />
       </div>
+      </PreviewBox>
       <Tabs value={tabValue} onChange={handleTabChange}>
-        <Tab label="Vue" />
-        <Tab label="Angular" />
-        <Tab label="Next" />
+        <Tab label="Vue"  style={{ color: tabsTextColor }} />
+        <Tab label="Angular"  style={{ color: tabsTextColor }}/>
+        <Tab label="Next" style={{ color: tabsTextColor }} />
       </Tabs>
-      <Divider sx={{ my: 2 }} />
+      <Divider style={{ backgroundColor: dividerColor }} sx={{ my: 2 }} />
       <TabContext value={tabValue}>
         <TabPanel value={0}>
           <CodeViewer files={vuecodes} />
@@ -845,7 +851,12 @@ export const TabsComponent = () => {
   );
 }
 
-
+const PreviewBox = styled.div`
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 25px;
+  background-color: #B2B1C3;
+`;
 const Container = styled.div`
    height: auto;
    margin: 50px;

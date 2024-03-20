@@ -1,14 +1,18 @@
-import React, { useState } from 'react';
+import { ThemeContext } from '../../App'; 
+import React, { useState, useContext } from 'react';
  import styled from "styled-components";
  import { TabPanel } from '@mui/lab';
  import { TabContext } from '@mui/lab';
- import CodeViewer from '../components/CodeViewer';
+ import CodeViewer from '../../components/CodeViewer';
  import { Divider, Tab, Tabs } from '@mui/material';
- import Toggle2 from '../components/reactcomponents/Toggle/Toggle2'; 
+ import Toggle2 from '../../components/reactcomponents/Toggle/Toggle2'; 
 
  
  
  export const ToggleComponent = () => {
+  const { setTheme, theme } = useContext(ThemeContext); 
+  const tabsTextColor = theme === "light" ? "#000000" : "#ffffff";
+  const dividerColor = theme === "light" ? "#000000" : "#ffffff";
    const [tabValue, setTabValue] = useState(0);
    const handleTabChange = (event, newValue) => {
      setTabValue(newValue);
@@ -674,8 +678,10 @@ import React, { useState } from 'react';
    return (
      <Container>
         <h1>Toggle</h1>
+        <PreviewBox>
         <Toggle2 label="Opción 1" disabled={false} />
         <Toggle2 label="Opción 2" disabled={true} />
+        </PreviewBox>
        <Tabs value={tabValue} onChange={handleTabChange}>
          <Tab label="Vue" />
          <Tab label="Angular" />
@@ -697,7 +703,12 @@ import React, { useState } from 'react';
    );
  }
  
- 
+ const PreviewBox = styled.div`
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 25px;
+  background-color: #B2B1C3;
+`;
  const Container = styled.div`
     height: auto;
     margin: 50px;

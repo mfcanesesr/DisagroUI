@@ -1,12 +1,16 @@
-import React, { useState } from 'react';
+import { ThemeContext } from '../../App'; 
+import React, { useState, useContext } from 'react';
 import styled from "styled-components";
 import { Divider, Tab, Tabs } from '@mui/material';
 import { TabPanel } from '@mui/lab';
 import { TabContext } from '@mui/lab';
-import CodeViewer from '../components/CodeViewer';
-import RadioButton from "../components/reactcomponents/RadioButton";
+import CodeViewer from '../../components/CodeViewer';
+import RadioButton from "../../components/reactcomponents/RadioButton";
 
 export function RadioButtonComponent() {
+  const { setTheme, theme } = useContext(ThemeContext); 
+  const tabsTextColor = theme === "light" ? "#000000" : "#ffffff";
+  const dividerColor = theme === "light" ? "#000000" : "#ffffff";
   const [tabValue, setTabValue] = useState(0);
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
@@ -290,9 +294,11 @@ export class RadioButtonComponent {
   return (
     <Container>
       <h1>Radio Button</h1>
+      <PreviewBox>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
         <RadioButton options={options} />
       </div>
+     ¿</PreviewBox>
       <Tabs value={tabValue} onChange={handleTabChange}>
         <Tab label="Vue" />
         <Tab label="Angular" />
@@ -317,4 +323,10 @@ export class RadioButtonComponent {
 const Container = styled.div`
   height: auto;
   margin: 50px;
+`;
+const PreviewBox = styled.div`
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 25px;
+  background-color: #B2B1C3;
 `;

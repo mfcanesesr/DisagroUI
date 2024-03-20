@@ -1,38 +1,66 @@
 import styled from "styled-components";
 import logo from "../assets/disagro-logo.ico";
-import { v } from "../styles/Variables";
 import { NavLink } from "react-router-dom";
-import { useContext } from "react";
+import { v } from "../styles/Variables";
+import { useContext, useState } from "react";
 import { ThemeContext } from "../App";
-import { CheckBoxOutlineBlankOutlined, CheckBoxOutlined, KeyboardArrowLeft, PinOutlined, RadioButtonCheckedOutlined, TabOutlined, ToggleOffOutlined } from "@mui/icons-material";
+import {
+  CheckBoxOutlined,
+  KeyboardArrowLeft,
+  PinOutlined,
+  RadioButtonCheckedOutlined,
+  TabOutlined,
+  ToggleOffOutlined,
+  ViewModuleOutlined,
+  DevicesFoldOutlined,
+  SourceOutlined,
+  NoteAddOutlined,
+  WindPowerOutlined
+} from "@mui/icons-material";
+
 export function Sidebar({ sidebarOpen, setSidebarOpen }) {
-  const ModSidebaropen = () => {
-    setSidebarOpen(!sidebarOpen);
+  const [subMenuOpen, setSubMenuOpen] = useState({});
+
+  const toggleSubMenu = (label) => {
+    setSubMenuOpen((prevState) => ({
+      ...prevState,
+      [label]: !prevState[label],
+    }));
   };
+
   const { setTheme, theme } = useContext(ThemeContext);
+
   const CambiarTheme = () => {
     setTheme((theme) => (theme === "light" ? "dark" : "light"));
   };
 
   return (
     <Container isOpen={sidebarOpen} themeUse={theme}>
-      <button className="Sidebarbutton" onClick={ModSidebaropen}>
-      <KeyboardArrowLeft />
+      <button className="Sidebarbutton" onClick={() => setSidebarOpen(!sidebarOpen)}>
+        <KeyboardArrowLeft />
       </button>
       <div className="Logocontent">
         <div className="imgcontent">
-          <img src={logo} />
+          <img src={logo} alt="logo" />
         </div>
       </div>
-      {linksArray.map(({ icon, label, to }) => (
+      {linksArray.map(({ label, icon, to, subMenu }) => (
         <div className="LinkContainer" key={label}>
-          <NavLink
-            to={to}
-            className={({ isActive }) => `Links${isActive ? ` active` : ``}`}
-          >
-            <div className="Linkicon">{icon}</div>
-            {sidebarOpen && <span>{label}</span>}
-          </NavLink>
+          <div onClick={() => toggleSubMenu(label)}>
+            <NavLink to={to} className={({ isActive }) => `Links${isActive ? ` active` : ``}`}>
+              <div className="Linkicon">{icon}</div>
+              {sidebarOpen && <span>{label}</span>}
+            </NavLink>
+          </div>
+          {subMenu && subMenuOpen[label] && (
+            <div className="SubMenuContainer">
+              {subMenu.map(({ label: subLabel, to: subTo }) => (
+                <NavLink key={subLabel} to={subTo} className="SubMenuLink">
+                  {subLabel}
+                </NavLink>
+              ))}
+            </div>
+          )}
         </div>
       ))}
       <div className="Themecontent">
@@ -58,35 +86,47 @@ export function Sidebar({ sidebarOpen, setSidebarOpen }) {
     </Container>
   );
 }
+
 //#region Data links
 const linksArray = [
   {
-    label: "Tabs",
-    icon: <TabOutlined  />,
-    to: "/",
+    label: "Brand elements",
+    icon: <WindPowerOutlined />,
+    to: "/branElements",
   },
   {
-    label: "Toggle",
-    icon: <ToggleOffOutlined   />,
-    to: "/toggle",
+    label: "Components",
+    icon: <SourceOutlined />,
+    to: "/components",
+    subMenu: [
+      { label: "Toggle", to: "/toggle" },
+      { label: "Tabs", to: "/tabs" },
+      { label: "Radio Button", to: "/radioButton" },
+      { label: "Check Box", to: "/checkbox" },
+      { label: "Number Input", to: "/numberInput" },
+      { label: "Content Switcher", to: "/contentSwitcher" },
+      { label: "Accordion", to: "/accordion" },
+      { label: "Button", to: "/button" },
+      { label: "Loading", to: "/loading" },
+      { label: "Text Area", to: "/textarea" },
+    ],
   },
   {
-    label: "Radio Button",
-    icon: <RadioButtonCheckedOutlined />,
-    to: "/radioButton",
+    label: "Modules",
+    icon: <ViewModuleOutlined />,
+    to: "/modules",
   },
   {
-    label: "Checkbox",
-    icon: <CheckBoxOutlined  />,
-    to: "/checkBox",
+    label: "Templates",
+    icon: <DevicesFoldOutlined />,
+    to: "/templates",
   },
   {
-    label: "Number Input",
-    icon: <PinOutlined  />,
-    to: "/numberInput",
+    label: "Borradores",
+    icon: <NoteAddOutlined />,
+    to: "/borradores",
   },
 ];
-
 //#endregion
 
 //#region STYLED COMPONENTS
@@ -97,14 +137,13 @@ const Container = styled.div`
   padding-top: 20px;
   .Sidebarbutton {
     position: absolute;
-    top: ${v.xxlSpacing};
+    top: 20px;
     right: -18px;
     width: 32px;
     height: 32px;
     border-radius: 50%;
     background: ${(props) => props.theme.bgtgderecha};
-    box-shadow: 0 0 4px ${(props) => props.theme.bg3},
-      0 0 7px ${(props) => props.theme.bg};
+    box-shadow: 0 0 4px ${(props) => props.theme.bg3}, 0 0 7px ${(props) => props.theme.bg};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -124,8 +163,7 @@ const Container = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-
-    padding-bottom: ${v.lgSpacing};
+    padding-bottom: 20px;
     .imgcontent {
       display: flex;
       img {
@@ -142,7 +180,6 @@ const Container = styled.div`
   }
   .LinkContainer {
     margin: 8px 0;
-   
     padding: 0 15%;
     :hover {
       background: ${(props) => props.theme.bg3};
@@ -151,13 +188,12 @@ const Container = styled.div`
       display: flex;
       align-items: center;
       text-decoration: none;
-      padding: calc(${v.smSpacing}-2px) 0;
+      padding: 16px 0;
       color: ${(props) => props.theme.text};
-      height:50px;
+      height: 50px;
       .Linkicon {
-        padding: ${v.smSpacing} ${v.mdSpacing};
+        padding: 8px 16px;
         display: flex;
-
         svg {
           font-size: 25px;
         }
@@ -171,9 +207,25 @@ const Container = styled.div`
       }
     }
   }
+  .SubMenuContainer {
+    padding-left: 30px;
+    .SubMenuLink {
+      display: block;
+      padding: 8px 0;
+      color: ${(props) => props.theme.text};
+      text-decoration: none;
+      transition: color 0.3s; /* Agregar transición para el cambio de color */
+    }
+    .SubMenuLink:hover {
+      color: ${(props) => props.theme.bg4}; /* Cambiar el color al hacer hover */
+    }
+    &.active .SubMenuLink {
+      color: ${(props) => props.theme.bg4}; /* Mantener el color verde cuando está seleccionado */
+    }
+  }  
   .Themecontent {
     position: absolute;
-    bottom:20px;
+    bottom: 20px;
     left: 0;
     right: 0;
     margin: auto;
@@ -184,69 +236,65 @@ const Container = styled.div`
     width: calc(100% - 40px);
     transition: all 0.3s;
   }
-  
-    .Togglecontent {
-      margin: ${({ isOpen }) => (isOpen ? `auto 40px` : `auto 15px`)};
-      width: 36px;
-      height: 20px;
-      border-radius: 10px;
-      transition: all 0.3s;
-      position: relative;
-      .theme-container {
-        background-blend-mode: multiply, multiply;
-        transition: 0.4s;
-        .grid {
-          display: grid;
-          justify-items: center;
-          align-content: center;
-          height: 100vh;
-          width: 100vw;
-          font-family: "Lato", sans-serif;
-        }
-        .demo {
-          font-size: 32px;
-          .switch {
-            position: relative;
-            display: inline-block;
-            width: 60px;
-            height: 34px;
-            .theme-swither {
-              opacity: 0;
-              width: 0;
-              height: 0;
-              &:checked + .slider:before {
-                left: 4px;
-                content: "🌑";
-                transform: translateX(26px);
-              }
+  .Togglecontent {
+    margin: ${({ isOpen }) => (isOpen ? `auto 40px` :` auto 15px`)};
+    width: 36px;
+    height: 20px;
+    border-radius: 10px;
+    transition: all 0.3s;
+    position: relative;
+    .theme-container {
+      background-blend-mode: multiply, multiply;
+      transition: 0.4s;
+      .grid {
+        display: grid;
+        justify-items: center;
+        align-content: center;
+        height: 100vh;
+        width: 100vw;
+        font-family: "Lato", sans-serif;
+      }
+      .demo {
+        font-size: 32px;
+        .switch {
+          position: relative;
+          display: inline-block;
+          width: 60px;
+          height: 34px;
+          .theme-swither {
+            opacity: 0;
+            width: 0;
+            height: 0;
+            &:checked + .slider:before {
+              left: 4px;
+              content: "🌑";
+              transform: translateX(26px);
             }
-            .slider {
+          }
+          .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: ${({ themeUse }) =>
+              themeUse === "light" ? "lightcheckbox" : "checkbox"};
+            transition: 0.4s;
+            &::before {
               position: absolute;
-              cursor: pointer;
-              top: 0;
-              left: 0;
-              right: 0;
-              bottom: 0;
-              background: ${({ themeUse }) =>
-                themeUse === "light" ? v.lightcheckbox : v.checkbox};
-
+              content: "☀️";
+              height: 0px;
+              width: 0px;
+              left: -10px;
+              top: 16px;
+              line-height: 0px;
               transition: 0.4s;
+            }
+            &.round {
+              border-radius: 34px;
               &::before {
-                position: absolute;
-                content: "☀️";
-                height: 0px;
-                width: 0px;
-                left: -10px;
-                top: 16px;
-                line-height: 0px;
-                transition: 0.4s;
-              }
-              &.round {
-                border-radius: 34px;
-
-                &::before {
-                  border-radius: 50%;
-                }
+                border-radius: 50%;
               }
             }
           }
@@ -261,4 +309,4 @@ const Divider = styled.div`
   background: ${(props) => props.theme.bg3};
   margin: ${v.lgSpacing} 0;
 `;
-//#endregion
+

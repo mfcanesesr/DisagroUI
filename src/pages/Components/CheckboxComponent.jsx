@@ -1,13 +1,16 @@
-import React,  { useState } from 'react';
+import { ThemeContext } from '../../App'; 
+import React, { useState, useContext } from 'react';
 import styled from "styled-components";
-import { TabPanel } from '@mui/lab';
-import { TabContext } from '@mui/lab';
-import CodeViewer from '../components/CodeViewer';
+import { TabPanel, TabContext } from '@mui/lab';
 import { Divider, Tab, Tabs } from '@mui/material';
-import Checkbox from '../components/reactcomponents/Checkbox/Checkbox';
+import Checkbox from '../../components/reactcomponents/Checkbox/Checkbox';
+import CodeViewer from '../../components/CodeViewer';
+
 
 
 export const CheckboxComponent = () => {
+  
+  
   const [tabValue, setTabValue] = useState(0);
   const handleTabChange = (event, newValue) => {
     setTabValue(newValue);
@@ -457,18 +460,24 @@ export const CheckboxComponent = () => {
       }`
     }
   ];
+  const { setTheme, theme } = useContext(ThemeContext); 
+  const tabsTextColor = theme === "light" ? "#000000" : "#ffffff";
+  const dividerColor = theme === "light" ? "#000000" : "#ffffff";
+
   return (
     <Container>
       <h1>Checkbox</h1>
+      <PreviewBox>
       <Checkbox label="Aceptar términos y condiciones" isDisabled={false} />
       <br></br>
       <Checkbox label="Esta opción está deshabilitada" isDisabled={true} />
+      </PreviewBox>
       <Tabs value={tabValue} onChange={handleTabChange}>
-        <Tab label="Vue" />
-        <Tab label="Angular" />
-        <Tab label="Next" />
+        <Tab label="Vue" style={{ color: tabsTextColor }} />
+        <Tab label="Angular"  style={{ color: tabsTextColor }}/>
+        <Tab label="Next" style={{ color: tabsTextColor }} />
       </Tabs>
-      <Divider sx={{ my: 2 }} />
+      <Divider style={{ backgroundColor: dividerColor }} sx={{ my: 2 }} />
       <TabContext value={tabValue}>
         <TabPanel value={0}>
           <CodeViewer files={vuecodes} />
@@ -483,7 +492,12 @@ export const CheckboxComponent = () => {
     </Container>
   );
 }
-
+const PreviewBox = styled.div`
+  margin-bottom: 20px;
+  padding: 20px;
+  border-radius: 25px;
+  background-color: #B2B1C3;
+`;
 
 const Container = styled.div`
    height: auto;
